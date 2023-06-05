@@ -1,20 +1,5 @@
-const GRID = 16;
+const DEF_SIZE = 16;
 const canvas = document.querySelector('#canvas');
-
-/** 
-for (let i = 0; i < GRID**2; i++) {
-    const pixel = document.createElement('div');
-    pixel.style.boxSizing = 'border-box';
-    pixel.style.height = (300)/GRID + 'px';
-    pixel.style.width = (300)/GRID +'px';
-    pixel.style.border = '1px gray solid';
-    //pixel.style.margin = '1px';
-    pixel.classList.add('pixel');
-    canvas.appendChild(pixel);
-
-}
-
-*/
 
 function deletePixels(){
     const elements = document.getElementsByClassName('pixel');
@@ -30,13 +15,13 @@ function colorPixel(e) {
 
 function updateCanvas(size){
     deletePixels();
+    console.log(typeof(size));
     for (let i = 0; i < size**2; i++) {
         const pixel = document.createElement('div');
         pixel.style.boxSizing = 'border-box';
         pixel.style.height = (400)/size + 'px';
         pixel.style.width = (400)/size +'px';
         pixel.style.border = '1px gray solid';
-        //pixel.style.margin = '1px';
         pixel.classList.add('pixel');
         canvas.appendChild(pixel);
     
@@ -49,10 +34,17 @@ function updateCanvas(size){
 
 function changeSize(){
     let size = prompt("Please enter the size you want for the grid. (Max is 100)");
-    updateCanvas(size);
+    if (isNaN(size) ){
+        alert('Error: Entered data is not a number.');
+    }
+    else if (size > 100 || size < 1){
+        alert('Error: That number is not between 1 and 100 (Inclusive)');
+    }
+    else {
+        updateCanvas(size);
+    }
+    
 }
 
 
-updateCanvas(GRID);
-//const pixels = document.querySelectorAll('.pixel');
-//pixels.forEach(pixel => pixel.addEventListener('mouseover', colorPixel));
+updateCanvas(DEF_SIZE);
